@@ -45,7 +45,7 @@ Using cluster VACC shell access to look at alignments:
 
 ```         
 /gpfs1/cl/pbio3990/example_data/
-?
+spack load samtools
 samtools tview WV_9.sorted.bam ##? for key for samtools
 cd ..
 cd /variants
