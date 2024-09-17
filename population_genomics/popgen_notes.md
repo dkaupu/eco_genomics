@@ -40,7 +40,6 @@ Bioinformatics Pipeline:
 -   Alignments converted to binary, sorted, indexed, and genotyped
 -   VCF file output filtered using vcftools
 
-
 Using cluster VACC shell access to look at alignments:
 
 ```         
@@ -53,6 +52,13 @@ zcat Centaurea_filtered.vcf.gz | head -n 20
 zcat Centaurea_filtered.vcf.gz | head -n 2000 | vim - ##cmd C to quit
 ```
 
-**Created "01 VCF filtering.r"**
--   Created plot with vcfR
--   Created ChromoPlot.pdf 
+**Created "01 VCF filtering.r"** - Created plot with vcfR - Created ChromoPlot.pdf
+
+------------------------------------------------------------------------
+
+**17 Sep 2024 - Filtering VCF files**
+
+-  Filter by depth (3-60 reads)
+-  Filter by sample (0.75) and SNP missingness (0.5)
+-  Filter out low-frequency alleles (only biallelic, min.mac=1)
+-  
