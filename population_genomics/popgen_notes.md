@@ -58,7 +58,29 @@ zcat Centaurea_filtered.vcf.gz | head -n 2000 | vim - ##cmd C to quit
 
 **17 Sep 2024 - Filtering VCF files**
 
--  Filter by depth (3-60 reads)
--  Filter by sample (0.75) and SNP missingness (0.5)
--  Filter out low-frequency alleles (only biallelic, min.mac=1)
--  
+-   Filter by depth (3-60 reads)
+-   Filter by sample (0.75) and SNP missingness (0.5)
+-   Filter out low-frequency alleles (only biallelic, min.mac=1)
+
+See code for more notes
+
+------------------------------------------------------------------------
+
+**19 Sep 2024 - Estimating Genetic Diversity**
+
+Created "02 Diversity Differentiation.r" in popgen docs
+
+-   Loaded in vcfR, tidyverse, & qqman
+-   Pulled final filtered vcf file - Pulled meta info from class
+-   Created "meta2" with matching ids of vcf (to create same \# of variables)
+-   Created "vcf.div" grouping by region
+-   Created "chr.main" to pull top 8 unique chromosomes and "chrnum" to number top 8 1-8
+-   Created "vcf.div.MHplot" to include chromosome #, added variable stating chromosome & position number
+-   Created manhattan plot of 8 chromosomes against Fst among regions
+
+See code for more notes
+
+```         
+## plotting issue fix:
+X11.options(type="cairo")
+```
