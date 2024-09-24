@@ -6,6 +6,7 @@ library(qqman)
 
 ## !! plotting issue fix:
 X11.options(type="cairo")
+options(bitmapType = "cairo")
 
 ## read in VCF file 
 vcf <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/vcf_final.filtered.vcf.gz")
@@ -54,7 +55,41 @@ manhattan(vcf.div.MHplot,
           col = c("blue4","orange3"),
           logp = F,
           ylab = "Fst among regions",
-          suggestiveline = quantile(vcf.div.MHplot$Gst, 0.999)) ## each dot a SNP, y=FST=allele frequency divergence btw pop.
-    ## everything below line in top 1%; most differentiated part of these regions
+          suggestiveline = quantile(vcf.div.MHplot$Gst, 0.5)) ## each dot a SNP, y=FST=allele frequency divergence btw pop.
+    ## everything above line in top 1%; most differentiated part of these regions
+    ## quantile value 0.5=median
+
+####################### STARTING 9/24/2024 ###################
+
+write.csv(vcf.div.MHplot,"~/projects/eco_genomics/population_genomics/outputs/Genetic_Diff_byRegion.csv",
+          quote=F,
+          row.names=F) ## export vcf.div.MHplot to spreadsheet, don't put name in quotes and give row names
+
+names(vcf.div.MHplot) ## columns 4-9 have Hs values
+
+vcf.div.MHplot %>%  
+  as_tibble() %>% 
+  pivot_longer(c(4:9)) %>%   ## stack columns 4 through 9 into one
+  ggplot(aes(x=value, fill=name)) + ## ggplot w/ all Hs values, color them by diff. names
+  geom_histogram(position="identity",alpha=0.5, bins=50) + ## alpha = opacity for every histogram
+  labs (title= "Genome-wide expected heterozygosity (Hs)", fill="Regions",
+        x="Gene diversity (Hs) within Regions",y="Counts of SNPs")
+## fill = key, x=x-axis, y=y-axis
+## ggplot = "layers" on features by +
+
+ggsave("Histogram_GenomicDiversity_byRegion.pdf", 
+       path="~/projects/eco_genomics/population_genomics/figures/")
+
+vcf.div.MHplot %>%  
+  as_tibble() %>% 
+  pivot_longer(c(4:9)) %>% 
+  group_by(name) %>%
+  filter(value!=0) %>% ## filter and keep values that ARE NOT != zero, let's just keep values that ARE polymorphic
+  summarise(avg_Hs=mean(value), ## calculate y for values I'm giving you and call it "x"
+            StdDev_Hs=sd(value), 
+            N_HS=n())           ## n=SNPs 
+    
+    
+
 
 

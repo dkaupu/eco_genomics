@@ -83,4 +83,16 @@ See code for more notes
 ```         
 ## plotting issue fix:
 X11.options(type="cairo")
+options(bitmapType = "cairo")
 ```
+
+------------------------------------------------------------------------
+
+**24 Sep 2024 - How else can we group our data?**
+
+Manhattan plot: F~ST~ shows percent average differentiation between population; plot may also show which SNPs have higher differentiation within the chromosome than others. Most SNPS in the graph have low F~ST~ showing neutral selection; outliers may show genes under selection
+
+-   Created independent vcf spreadsheet w/ filtered and concatenated data
+-   Created variable to make all H~S~ data into one column and directly graphed it
+-   Exported histogram graph showing "Genome-wide expected Heterozygosity"
+-   Analyzed non-zero values of H~S~ to reflect all polymorphic *individual* data (removed any SNPs that did NOT experience any heterozygosity)
