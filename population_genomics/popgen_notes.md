@@ -86,6 +86,8 @@ X11.options(type="cairo")
 options(bitmapType = "cairo")
 ```
 
+See code for more notes
+
 ------------------------------------------------------------------------
 
 **24 Sep 2024 - How else can we group our data?**
@@ -96,3 +98,11 @@ Manhattan plot: F~ST~ shows percent average differentiation between population; 
 -   Created variable to make all H~S~ data into one column and directly graphed it
 -   Exported histogram graph showing "Genome-wide expected Heterozygosity"
 -   Analyzed non-zero values of H~S~ to reflect all polymorphic *individual* data (removed any SNPs that did NOT experience any heterozygosity)
+
+PCA graph:
+
+-   Filtered data to remove SNPs 500 bp or closer (var "vcf.thin")
+-   Combined metadata "vcf_final.filtered.thinned.vcf.gz"
+-   Unzipped gz file in system, created simple PCA graph
+
+See code for more notes
