@@ -37,7 +37,30 @@ geno <- vcf2geno(input.file="/gpfs1/home/d/k/dkaupu/vcf_final.filtered.thinned.v
 
 CentPCA <- LEA::pca("outputs/vcf_final.filtered.thinned.geno", scale=TRUE) ## explicitly LEA library pca function
 
-plot(CentPCA$projections,
-     col=as.factor(meta2$region), ## color by region
-     legend("bottomright", legend=as.factor(unique(meta2$region)), 
-                           fill=as.factor(unique(meta2$region))))
+CentPCA <- load.pcaProject("vcf_final.filtered.thinned.pcaProject") ## reload outputs
+
+show(CentPCA) ## shows basic info of object
+plot(CentPCA) ## y = eigen value/ effectivity of PCA line
+
+# plot(CentPCA$projections,
+#     col=as.factor(meta2$region), ## color by region
+#     legend("bottomright", legend=as.factor(unique(meta2$region)), 
+#                           fill=as.factor(unique(meta2$region))))
+
+######################### 9/26/2024 #######################
+
+## PC1 v PC2
+ggplot(as.data.frame(CentPCA$projections),
+       aes(x=V1, y=V2, color=meta2$region, shape=meta2$continent)) +  ## close AFTER aes, layer + after
+       geom_point(alpha=1) + ## alpha= transparency, could try change to see clusters better
+       labs(title="Centaurea genetic PCA", x="PC1", y="PC2", color="Region", shape="Continent") # +
+#      xlim(-10,10) + ylim(-10,10)
+
+ggsave("figures/CentPCA_PC1vPC2.pdf", width=6, height=6, units="in")
+
+## PC2 v PC3
+ggplot(as.data.frame(CentPCA$projections),
+       aes(x=V2, y=V3, color=meta2$region, shape=meta2$continent)) +  ## close AFTER aes, layer + after
+  geom_point(alpha=1) + ## alpha= transparency, could try change to see clusters better
+  labs(title="Centaurea genetic PCA", x="PC2", y="PC3", color="Region", shape="Continent")
+

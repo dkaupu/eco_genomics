@@ -90,7 +90,7 @@ See code for more notes
 
 ------------------------------------------------------------------------
 
-**24 Sep 2024 - How else can we group our data?**
+**24 Sep 2024 - Hexp and PCA graphs**
 
 Manhattan plot: F~ST~ shows percent average differentiation between population; plot may also show which SNPs have higher differentiation within the chromosome than others. Most SNPS in the graph have low F~ST~ showing neutral selection; outliers may show genes under selection
 
@@ -104,5 +104,24 @@ PCA graph:
 -   Filtered data to remove SNPs 500 bp or closer (var "vcf.thin")
 -   Combined metadata "vcf_final.filtered.thinned.vcf.gz"
 -   Unzipped gz file in system, created simple PCA graph
+
+See code for more notes
+
+------------------------------------------------------------------------
+
+**26 Sep 2024 - PCAs!**
+
+-   Created scree plot to analyze eigen values of PCAs
+-   Created PCA plot using PC1&2, grouped by region and continent (PNW and CEU clustering!, overlap = possible colonization populations; PNW suggest unsampled ancestral *Centaurea* sp. or diverged from rest of sp.)
+-   Created PCA plot using PC2&3, not a lot of clustering by PC3
+
+
+```         
+## Find PC % or percent variation explained by PCx
+
+CentPCA%eigenvalues [1:5] # show me eigen values 1-5
+sum(CentPCA$eigenvalues)
+CentPCA$eigenvalues[1]/sum(CentPCA$eigenvalues)
+```
 
 See code for more notes
