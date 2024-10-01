@@ -133,6 +133,7 @@ Evaluating cross-entropy and eigen values to consider best K value for admixture
 
 -   Created admixture analysis for K=5 grouped by regions, see some color clustering for PNW and CEU (Can be found in figures folder)
 -   Created easily producable admixture analysis for any K groups; only need to change var myK
+
 *i renamed the file before saving; it rolled back to 9/26 file :(, will use code uploaded to brightspace as placeholder*
  
 Selection Outlier Analyses
