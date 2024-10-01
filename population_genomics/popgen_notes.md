@@ -115,7 +115,6 @@ See code for more notes
 -   Created PCA plot using PC1&2, grouped by region and continent (PNW and CEU clustering!, overlap = possible colonization populations; PNW suggest unsampled ancestral *Centaurea* sp. or diverged from rest of sp.)
 -   Created PCA plot using PC2&3, not a lot of clustering by PC3
 
-
 ```         
 ## Find PC % or percent variation explained by PCx
 
@@ -123,5 +122,21 @@ CentPCA%eigenvalues [1:5] # show me eigen values 1-5
 sum(CentPCA$eigenvalues)
 CentPCA$eigenvalues[1]/sum(CentPCA$eigenvalues)
 ```
+
+See code for more notes
+
+------------------------------------------------------------------------
+
+**01 Oct 2024 - Admixture Analysis & Selection Outliers**
+
+Evaluating cross-entropy and eigen values to consider best K value for admixture analysis
+
+-   Created admixture analysis for K=5 grouped by regions, see some color clustering for PNW and CEU (Can be found in figures folder)
+-   Created easily producable admixture analysis for any K groups; only need to change var myK
+*i renamed the file before saving; it rolled back to 9/26 file :(, will use code uploaded to brightspace as placeholder*
+ 
+Selection Outlier Analyses
+-   Created Manhattan Plot of loci after filtering out rare alleles
+-   Created PCAdapt Graph to scan for selection and filtered out highly selected BP's
 
 See code for more notes

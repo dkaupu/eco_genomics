@@ -64,3 +64,20 @@ ggplot(as.data.frame(CentPCA$projections),
   geom_point(alpha=1) + ## alpha= transparency, could try change to see clusters better
   labs(title="Centaurea genetic PCA", x="PC2", y="PC3", color="Region", shape="Continent")
 
+############################## 10/1/2024 #####################
+
+pdf("figures/Admixture_K5.pdf", width=10, height=5)
+barplot(as.matrix(t(myKQmeta[ , 1:myK])), ## t = transpose, graph [ , ] all indv for values 1-myK/5
+          border = NA,
+          space = 0,
+          col=my.colors[1:myK],
+          xlab = "Geographic Regions", 
+          ylab = "Ancestry Proportions",
+          main = paste0("Ancestry matrix K=", myK))
+axis (1,
+        at=1:length(myKQmeta$region),
+        labels=myKQmeta$region,
+        tick = F,
+        cex.axis = 0.5,
+        las = 3) ## horizontal labels
+> dev.off()
