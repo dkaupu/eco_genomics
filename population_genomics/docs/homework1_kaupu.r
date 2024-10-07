@@ -1,7 +1,6 @@
 library(vcfR)
 library(SNPfiltR)
 library(tidyverse)
-library(qqman)
 library(LEA)
 
 options(bitmapType = "cairo")
