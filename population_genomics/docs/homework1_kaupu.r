@@ -221,7 +221,7 @@ ggsave("figures/CentPCA75_PC1vPC2.pdf", width=6, height=6, units="in")
 
 ggplot(as.data.frame(CentPCA100$projections),
        aes(x=V1, y=V2, color=meta.thin100$region, shape=meta.thin100$continent)) + 
-       geom_point(alpha=0.5) +
+       geom_point(alpha=0.75) +
        labs(title="100%", x="PC1", y="PC2", color="Region", shape="Continent") # +
 
 ggsave("figures/CentPCA100_PC1vPC2.pdf", width=6, height=6, units="in")
