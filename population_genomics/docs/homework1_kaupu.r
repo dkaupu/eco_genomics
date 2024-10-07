@@ -51,9 +51,9 @@ dim(vcf.filt.indSNPMiss100) # variants = SNP, cols = s# of indv
 ############################ DIVERSITY ANALYSIS ########################
 
 ## calling in indv vcf files (50, 75, 100) & meta data
-vcf50 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/vcf_final50.filtered.vcf.gz")
-vcf75 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/vcf_final75.filtered.vcf.gz")
-vcf100 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/vcf_final100.filtered.vcf.gz")
+vcf50 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/homework/vcf_final50.filtered.vcf.gz")
+vcf75 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/homework/vcf_final75.filtered.vcf.gz")
+vcf100 <- read.vcfR("~/projects/eco_genomics/population_genomics/outputs/homework/vcf_final100.filtered.vcf.gz")
 
 meta <- read.csv("/gpfs1/cl/pbio3990/PopulationGenomics/metadata/meta4vcf.csv")
 
@@ -115,7 +115,7 @@ vcf.div.MHplot50 %>%
   as_tibble() %>% 
   pivot_longer(c(4:9)) %>% 
   group_by(name) %>%
-  filter(value=0) %>% ## filter and keep values that ARE NOT != zero, let's just keep values that ARE polymorphic
+  filter(value==0) %>% ## filter and keep values that ARE == zero
   summarise(avg_Hs=mean(value), ## calculate y for values I'm giving you and call it "x"
             StdDev_Hs=sd(value), 
             N_HS=n())           ## n=SNPs 
@@ -123,16 +123,16 @@ vcf.div.MHplot50 %>%
   as_tibble() %>% 
   pivot_longer(c(4:9)) %>% 
   group_by(name) %>%
-  filter(value!=0) %>% ## filter and keep values that ARE NOT != zero, let's just keep values that ARE polymorphic
-  summarise(avg_Hs=mean(value), ## calculate y for values I'm giving you and call it "x"
+  filter(value!=0) %>% ## filter and keep values that ARE NOT != zero
+  summarise(avg_Hs=mean(value),
             StdDev_Hs=sd(value), 
-            N_HS=n())           ## n=SNPs 
+            N_HS=n())         
 
 vcf.div.MHplot75 %>%  
   as_tibble() %>% 
   pivot_longer(c(4:9)) %>% 
   group_by(name) %>%
-  filter(value=0) %>% 
+  filter(value==0) %>% 
   summarise(avg_Hs=mean(value), 
             StdDev_Hs=sd(value), 
             N_HS=n())          
@@ -149,7 +149,7 @@ vcf.div.MHplot100 %>%
   as_tibble() %>% 
   pivot_longer(c(4:9)) %>% 
   group_by(name) %>%
-  filter(value=0) %>% 
+  filter(value==0) %>% 
   summarise(avg_Hs=mean(value),
             StdDev_Hs=sd(value), 
             N_HS=n())         
