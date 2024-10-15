@@ -27,7 +27,7 @@ See code for more notes :)
 
 ------------------------------------------------------------------------
 
-**10 Oct 2024 -- Transcriptomics continued**
+**10 Oct 2024 -- Exploring in DESeq2**
 
 -   reading in conditions and counts matrix
 -   explored counts matrix; looked at reads per sample and reads per gene
@@ -37,3 +37,13 @@ See code for more notes :)
 *Commenting out large chunks*: highlight code, cmd+shift+c
 
 See code for more notes [:
+
+------------------------------------------------------------------------
+
+**15 Oct 2024 -- Transcriptomics Continued**
+
+-   Created counts plot for dev22v18
+-   Created MA plot for dev22v18
+-   Created volcano plot, heat map ""
+
+See code for more notes <:
