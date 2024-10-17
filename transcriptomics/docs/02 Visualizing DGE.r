@@ -60,7 +60,7 @@ ggplot(res_df, aes(x=log2FoldChange, y=-log10(padj), color=Significant)) +
                geom_hline(yintercept=-log10(0.05), linetype="dashed", color="gray") +
                geom_vline(xintercept=c(-1,1), linetype="dashed", color="gray") ## at least doubling of gene expression to show DGE
 
-############## Heatmap #########
+############## Heatmap #############
 
 vsd <- vst(dds, blind = F)
 
@@ -75,5 +75,3 @@ pheatmap(mat, annotation_col=df, #color is magnitude of expression
 
 ## phenogram trying to group samples based on similar gene expression patterns 
 ## (row maybe same family of genes, col shows overall affect of treatment if clustered)
-
-
