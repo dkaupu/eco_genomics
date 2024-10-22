@@ -60,4 +60,12 @@ See code for more notes c:
 
 ------------------------------------------------------------------------
 
+**22 Oct 2024 -- **
 
+-   Calculated all values for euler plot
+-   Created Euler plot (venn diagram thing)
+-   Created scatter plots of copepod unique developmental temp's response to finaltemp (base v 28) (base v 33)
+
+See code for more notes :>
+
+------------------------------------------------------------------------

@@ -2,6 +2,8 @@ library(DESeq2)
 library(ggplot2)
 library(pheatmap)
 library(eulerr)
+library(dplyr)
+library(tidyr)
 options(bitmapType = "cairo")
 
 setwd("~/projects/eco_genomics/transcriptomics/")
@@ -63,17 +65,125 @@ degs_D18_A33_D22_A33 <- row.names(res_D18_A33_D22_A33[res_D18_A33_D22_A33$padj <
 
 plotMA(res_D18_A33_D22_A33, ylim=c(-4,4))
 
+########### Creating Euler Plot #########
+
 length(degs_D18_BASE_D22_BASE) # 1935 differentially expressed genes
 length(degs_D18_A28_D22_A28) # 296
 length(degs_D18_A33_D22_A33) # 78; 
 
-########### Looking at overlap of our 3 constrasts #########
 ## which genes are differentially expressed in multiple contrasts?
-
 length(intersect(degs_D18_BASE_D22_BASE,degs_D18_A28_D22_A28)) # 107
 length(intersect(degs_D18_BASE_D22_BASE,degs_D18_A33_D22_A33)) # 44
 length(intersect(degs_D18_A28_D22_A28,degs_D18_A33_D22_A33)) # 29
-length(interesct(degs,))
 
 nested_intersection <- intersect(degs_D18_BASE_D22_BASE,degs_D18_A28_D22_A28)
 length(intersect(degs_D18_A33_D22_A33, nested_intersection)) ## 23 btw all groups
+
+## calculating number of unique genes in each contrast
+1935-107-44+23 # 1807 unique genes DGE at BASE b/w dev18 and dev28
+296-107-29+23 # 183 unique A28 " "
+78-44-29+23 # 28 unique A33 " "
+
+107-23 # 84 uniquely shared btw BASE and A28
+44-23 # 21 btw BASE & A33
+29-23 # 6 btw A28 & A33
+
+#### making the plot!
+myEuler <- euler(c("BASE"=1807,"A28"=183,"A33"=28,"BASE&A28"=84,
+                   "BASE&A33"=21,"A28&A33"=6,"BASE&A28&A33"=23))
+
+plot(myEuler, lty=1:3, quantities=T)
+
+#### Creating scatter plots ####
+
+#### 1. Scatter plot of responses to final temp A28 when copepods develop @ 18 v 22 ####
+# contrast D18_A28vBASE
+res_D18_BASEvsA28 <- as.data.frame(results(dds, contrast = c("group","D18BASE","D18A28"), alpha=0.05))
+
+# contrast D22_A28vBASE
+res_D22_BASEvsA28 <- as.data.frame(results(dds, contrast = c("group","D22BASE","D22A28"), alpha=0.05))
+
+# merge dataframes
+res_df28 <- merge (res_D18_BASEvsA28, res_D22_BASEvsA28, by = "row.names", suffixes = c(".18",".22"))
+rownames(res_df28) <- res_df28$Row.names
+res_df28 <- res_df28[, -1] #removing 1st column; Row.names
+
+# Define color mapping logic with the mutate function
+
+res_df28 <- res_df28 %>%
+  mutate(fill = case_when(
+    padj.18 < 0.05 & stat.18 < 0 ~ "turquoise3", ## genes significant in 18 degree contrast & upregulated in 28
+    padj.18 < 0.05 & stat.18 > 0 ~ "magenta4",
+    padj.22 < 0.05 & stat.22 < 0 ~ "chartreuse3",
+    padj.22 < 0.05 & stat.22 > 0 ~ "coral3"
+  ))
+
+## count number of points per fill color
+color_counts28 <- res_df28 %>%
+  group_by(fill) %>%
+  summarise(count = n())
+
+label_positions <- data.frame(
+  fill = c("chartreuse3","magenta4","coral3","turquoise3"),
+  x_pos = c(1, 5, 0, -7.5),
+  y_pos = c(-5, 0, 9, 3))
+
+label_data28 <- merge(color_counts28, label_positions, by = "fill")
+
+ggplot(res_df28, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
+  geom_point(alpha = 0.8) +
+  scale_color_identity() +
+  geom_text(data = label_data28, aes(x = x_pos, y = y_pos, label = count, color = fill), size =5) +
+  labs(x = "Log2FoldChange 28 vs. BASE at 18",
+       y = "Log2FoldChange 28 vs. BASE at 22",
+       title = "How does response to 28C vary by DevTemp?") +
+  theme_minimal()
+## in comparison to base, developing at 22 is upregulated
+
+#### 2. Scatter plot of responses to final temp A33 when copepods develop @ 18 v 22 ####
+
+res_D18_BASEvsA33 <- as.data.frame(results(dds, contrast = c("group","D18BASE","D18A33"), alpha=0.05))
+
+res_D22_BASEvsA33 <- as.data.frame(results(dds, contrast = c("group","D22BASE","D22A33"), alpha=0.05))
+
+res_df33 <- merge (res_D18_BASEvsA33, res_D22_BASEvsA33, by = "row.names", suffixes = c(".18",".22"))
+rownames(res_df33) <- res_df33$Row.names
+res_df33 <- res_df33[, -1] 
+
+res_df33 <- res_df33 %>%
+  mutate(fill = case_when(
+    padj.18 < 0.05 & stat.18 < 0 ~ "turquoise3", 
+    padj.18 < 0.05 & stat.18 > 0 ~ "magenta4",
+    padj.22 < 0.05 & stat.22 < 0 ~ "chartreuse3",
+    padj.22 < 0.05 & stat.22 > 0 ~ "coral3"
+  ))
+
+color_counts33 <- res_df33 %>%
+  group_by(fill) %>%
+  summarise(count = n())
+
+label_positions <- data.frame(
+  fill = c("chartreuse3","magenta4","coral3","turquoise3"),
+  x_pos = c(1, 5, 0, -7.5),
+  y_pos = c(-5, 0, 7, 3))
+
+label_data33 <- merge(color_counts33, label_positions, by = "fill")
+
+ggplot(res_df33, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
+  geom_point(alpha = 0.8) +
+  scale_color_identity() +
+  geom_text(data = label_data33, aes(x = x_pos, y = y_pos, label = count, color = fill), size =5) +
+  labs(x = "Log2FoldChange 33 vs. BASE at 18",
+       y = "Log2FoldChange 33 vs. BASE at 22",
+       title = "How does response to 33C vary by DevTemp?") +
+  theme_minimal()
+
+
+
+
+
+
+
+
+
+
