@@ -60,7 +60,7 @@ See code for more notes c:
 
 ------------------------------------------------------------------------
 
-**22 Oct 2024 -- **
+**22 Oct 2024 -- Euler plot and scatter plot**
 
 -   Calculated all values for euler plot
 -   Created Euler plot (venn diagram thing)
