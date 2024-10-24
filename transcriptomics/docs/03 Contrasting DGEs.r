@@ -4,6 +4,7 @@ library(pheatmap)
 library(eulerr)
 library(dplyr)
 library(tidyr)
+library(gridExtra)
 options(bitmapType = "cairo")
 
 setwd("~/projects/eco_genomics/transcriptomics/")
@@ -109,11 +110,10 @@ rownames(res_df28) <- res_df28$Row.names
 res_df28 <- res_df28[, -1] #removing 1st column; Row.names
 
 # Define color mapping logic with the mutate function
-
 res_df28 <- res_df28 %>%
   mutate(fill = case_when(
     padj.18 < 0.05 & stat.18 < 0 ~ "turquoise3", ## genes significant in 18 degree contrast & upregulated in 28
-    padj.18 < 0.05 & stat.18 > 0 ~ "magenta4",
+    padj.18 < 0.05 & stat.18 > 0 ~ "magenta4", # stat = test statistic, correlated to up/downregulation (if LFC was also pos, stat is pos)
     padj.22 < 0.05 & stat.22 < 0 ~ "chartreuse3",
     padj.22 < 0.05 & stat.22 > 0 ~ "coral3"
   ))
@@ -123,17 +123,20 @@ color_counts28 <- res_df28 %>%
   group_by(fill) %>%
   summarise(count = n())
 
-label_positions <- data.frame(
+label_positions28 <- data.frame(
   fill = c("chartreuse3","magenta4","coral3","turquoise3"),
   x_pos = c(1, 5, 0, -7.5),
   y_pos = c(-5, 0, 9, 3))
 
-label_data28 <- merge(color_counts28, label_positions, by = "fill")
+label_data28 <- merge(color_counts28, label_positions28, by = "fill")
 
-ggplot(res_df28, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
+plot28 <- ggplot(res_df28, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
   geom_point(alpha = 0.8) +
   scale_color_identity() +
   geom_text(data = label_data28, aes(x = x_pos, y = y_pos, label = count, color = fill), size =5) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "antiquewhite4") +
+  geom_abline(intercept = 0, slope = -1, linetype = "dashed", color = "antiquewhite4") +
+  xlim(-10,10) + ylim(-10,10) +
   labs(x = "Log2FoldChange 28 vs. BASE at 18",
        y = "Log2FoldChange 28 vs. BASE at 22",
        title = "How does response to 28C vary by DevTemp?") +
@@ -162,23 +165,31 @@ color_counts33 <- res_df33 %>%
   group_by(fill) %>%
   summarise(count = n())
 
-label_positions <- data.frame(
+label_positions33 <- data.frame(
   fill = c("chartreuse3","magenta4","coral3","turquoise3"),
-  x_pos = c(1, 5, 0, -7.5),
-  y_pos = c(-5, 0, 7, 3))
+  x_pos = c(1, 5, 0, -4),
+  y_pos = c(-5, 0, 7, 2))
 
-label_data33 <- merge(color_counts33, label_positions, by = "fill")
+label_data33 <- merge(color_counts33, label_positions33, by = "fill")
 
-ggplot(res_df33, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
+plot33 <- ggplot(res_df33, aes(x = log2FoldChange.18, y = log2FoldChange.22, color = fill)) +
   geom_point(alpha = 0.8) +
   scale_color_identity() +
   geom_text(data = label_data33, aes(x = x_pos, y = y_pos, label = count, color = fill), size =5) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "antiquewhite4") +
+  geom_abline(intercept = 0, slope = -1, linetype = "dashed", color = "antiquewhite4") +
+  xlim(-10,10) + ylim(-10,10) +
   labs(x = "Log2FoldChange 33 vs. BASE at 18",
        y = "Log2FoldChange 33 vs. BASE at 22",
        title = "How does response to 33C vary by DevTemp?") +
   theme_minimal()
 
+##### Putting the two scatter plots together in a two-panel plot! #####
 
+combined_plot <- grid.arrange(plot28, plot33, ncol=2) #two columns, one row
+
+#lets save it
+ggsave("~/projects/eco_genomics/transcriptomics/figures/combined_scatter_plot.png", combined_plot, width = 12, height = 6)
 
 
 

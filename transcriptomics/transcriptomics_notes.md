@@ -46,7 +46,7 @@ See code for more notes [:
 -   Created MA plot for dev22v18
 -   Created volcano plot, heat map ""
 
-See code for more notes <:
+See code for more notes \<:
 
 ------------------------------------------------------------------------
 
@@ -60,12 +60,38 @@ See code for more notes c:
 
 ------------------------------------------------------------------------
 
-**22 Oct 2024 -- Euler plot and scatter plot**
+**22 Oct 2024 -- Euler plot and scatter plots**
 
 -   Calculated all values for euler plot
--   Created Euler plot (venn diagram thing)
+-   Created Euler plot (venn diagram thing, except scaled by values)
 -   Created scatter plots of copepod unique developmental temp's response to finaltemp (base v 28) (base v 33)
 
-See code for more notes :>
+See code for more notes :\>
+
+------------------------------------------------------------------------
+
+**24 Oct 2024 --**
+
+[Review of plots we've made:]{.underline}
+
+-   Bar plot for \# of reads per sample; shows success and variation in sequencing effort
+-   PCA; visualizes variation among groups
+-   MA plot shows average counts vs logFoldChange; difference in expression between 2 groups relating to relative expression
+-   Counts/Point plot of DGE; normalize counts of specific genes \@ different vars (devTemp, regardless of FinalTemp)
+-   Volcano plot shows LFC vs -logpval; shows significant up and downregulation
+-   Euler plot; visualizes which DGE genes are shared/unique
+-   Heatmap; see by color & saturation differences among genes or other matrices of data (correlation, etc.)
+-   Scatter plots;  colored by contrast and significance
+
+What we did today:
+
+-   Reviewed scatter plots & combined into one picture
+-   Filtered data to BASE data & good genes and samples
+-   Made dendrogram AND PCA to look for sample outliers
+-   Filtered further (check code) and stabilized
+-   Graphed mean connectivity and scale topology (explanation in code)
+
+
+See code for more notes C:
 
 ------------------------------------------------------------------------
