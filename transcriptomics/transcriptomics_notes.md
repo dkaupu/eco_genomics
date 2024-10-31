@@ -96,7 +96,7 @@ See code for more notes C:
 
 ------------------------------------------------------------------------
 
-**29 Oct 2024 -- **
+**29 Oct 2024 -- Blockwise analyses & Heatmaps**
 
 - By looking at mean connectivity and scale topology, we picked a power of 26
 - ran blockwise analysis, but ran out of time
