@@ -106,9 +106,82 @@ a2 <- ggplot(sft.data, aes(Power, mean.k., label = Power)) +
 grid.arrange(a1, a2, nrow = 2)
 
 ## WGCNA needs to pick degree of relationship; how tightly should these genes be to one another?
-## scale free topology a descrition of a network; network of clusters tightly and loosely related
+## scale free topology; a description of a network; network of clusters tightly and loosely related
+    ## how well do these powers match a scale-free topology vs scale topology
 ## if you change the strength of correlation, how does it affect clustering?
     ## as you increase power/strength of relationship with genes they're closer
 ## connectivity = avg number of connections a gene has, decreases as power increases
 
 ## choose a power that maximizes biological relevance while still maintaining connectivity between genes
+## choosing 26!
+
+soft_power <- 26
+temp_cor <- cor
+cor <- WGCNA::cor # sets the temp_cor functions to use WGCNA's correlation function
+
+norm.counts[] <- sapply(norm.counts, as.numeric) # making it numberical data table
+
+#### WHERE WE STOPPED 10/29/2024 ####
+
+# create network and identify modules based on the parameters given
+bwnet26 <- blockwiseModules(norm.counts, 
+                            maxBlockSize = 30000,
+                            TOMType = "signed", #allow correlations to be only positive or pos & neg (unsigned)
+                            power = soft_power,
+                            mergeCutHeight = 0.25,
+                            numericLabels = F,
+                            randomSeed = 1234,
+                            verbose = 3)
+
+saveRDS(bwnet26, file = "~/projects/eco_genomics/transcriptomics/outputs/bwnet26.rds")
+
+# to load bwnet file in later, use:
+# bwnet26 <- readRDS("~/projects/eco_genomics/transcriptomics/outputs/bwnet26.rds")
+
+cor <- temp_cor # resetting cor function to baseR's cor function instead of WGCNA's
+
+###### Exploring Module Eigengenes ######
+
+module_eigengenes <- bwnet26$MEs
+head(module_eigengenes)
+dim(module_eigengenes)
+
+# get the number of genes for each module
+table(bwnet26$colors) # names each module by color; pulls out color section of table
+
+# plot the dendrogram and the module colors
+plotDendroAndColors(bwnet26$dendrograms[[1]], cbind(bwnet26$unmergedColors, bwnet26$colors),
+                    c("unmerged", "merged"),
+                    dendroLabels = F,
+                    addGuide = T,
+                    hang = 0.03,
+                    guideHang = 0.05)
+
+###### Correlation of modules with traits #######
+
+## Defining the numbers of genes and samples
+nSamples <- nrow(norm.counts)
+nGenes <- ncol(norm.counts)
+
+## testing for a correlation between module eigengenes and trait data
+module.trait.corr <- cor(module_eigengenes, traitData, use = "p") ## use pearson's correlation
+
+module.trait.corr.pvals <- corPvalueStudent(modult.trait.corr, nSamples) ## calculating pvals for each correlation
+
+heatmap.data <- merge(module_eigengenes, traitData, by = "row.names") ## VIsualizing module trait association as a heatmap
+head(heatmap.data)
+
+heatmap.data <- heatmap.data %>% ## addressing error of row.names not being numeric
+  column_to_rownames(var = "Row.names") # transposes
+names(heatmap.data)
+
+## Making our heatmap of correlations
+CorLevelPlot(heatmap.data,
+             x = names(heatmap.data)[42:44], ## changes based on number 
+             y = names(heatmap.data)[1:41],  ## of eigengenes
+             col = c("blue4", "skyblue", "white", "pink", "red"))
+
+
+
+
+

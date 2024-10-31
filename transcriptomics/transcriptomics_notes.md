@@ -70,9 +70,9 @@ See code for more notes :\>
 
 ------------------------------------------------------------------------
 
-**24 Oct 2024 --**
+**24 Oct 2024 -- Mean Connectivity & Scale Topology**
 
-[Review of plots we've made:]{.underline}
+Review of plots we've made:
 
 -   Bar plot for \# of reads per sample; shows success and variation in sequencing effort
 -   PCA; visualizes variation among groups
@@ -93,5 +93,15 @@ What we did today:
 
 
 See code for more notes C:
+
+------------------------------------------------------------------------
+
+**29 Oct 2024 -- **
+
+- By looking at mean connectivity and scale topology, we picked a power of 26
+- ran blockwise analysis, but ran out of time
+
+* dont be greedy, but ask for what you need*
+See code for more notes ^-^
 
 ------------------------------------------------------------------------
