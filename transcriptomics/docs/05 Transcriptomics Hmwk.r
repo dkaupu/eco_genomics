@@ -46,7 +46,6 @@ dim(module_eigengenes26)
 
 table(bwnet26$colors) # getting the number of genes for each module; names each module by color 
 
-
 plotDendroAndColors(bwnet26$dendrograms[[1]], cbind(bwnet26$unmergedColors, bwnet26$colors), # plot the dendrogram and the module colors
                     c("unmerged", "merged"),
                     dendroLabels = F,
