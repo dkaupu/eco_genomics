@@ -69,6 +69,7 @@ nrow(dds_WGCNA_75) # filtered down to 29559 transcripts
 
 dds_norm <- vst(dds_WGCNA_75) # performing variance stabilization
 
+
 # get and save normalizes counts to use below
 norm.counts <- assay(dds_norm) %>%
   t() # transpose it
@@ -86,6 +87,8 @@ sft <-  pickSoftThreshold(norm.counts,
 
 
 sft.data <- sft$fitIndices
+save(sft.data,file = "~/projects/eco_genomics/transcriptomics/outputs/sftdata.Rda")
+sft.data <- as.data.frame("~/projects/eco_genomics/transcriptomics/outputs/sftdata.Rda")
 
 # plot to pick power
 
@@ -103,7 +106,8 @@ a2 <- ggplot(sft.data, aes(Power, mean.k., label = Power)) +
   labs(x = "Power", y = "Mean Connectivity") +
   theme_classic()
 
-grid.arrange(a1, a2, nrow = 2)
+combined_plot <- grid.arrange(a1, a2, nrow = 2)
+ggsave("~/projects/eco_genomics/transcriptomics/figures/power.png", combined_plot, width = 10, height = 8)
 
 ## WGCNA needs to pick degree of relationship; how tightly should these genes be to one another?
 ## scale free topology; a description of a network; network of clusters tightly and loosely related
