@@ -23,7 +23,7 @@ climate_pca <- prcomp(x = metaclim, scale. = TRUE)
 ##                  ##geom_smooth(aes(fill = meta$region, color = meta$region), show.legend = F)
 ##                  ##geom_polygon(aes(fill=meta$region, color=meta$region, alpha=0.3), show.legend = F)
 
-
+a
 ## we've coloured by region and coloured the loadings and loadings label by whether 
 ## they are a temp variable (red) or if they are a precipitation variable (blue)
 autoplot(climate_pca, 
@@ -43,14 +43,14 @@ ggsave("~/projects/eco_genomics/group_project/figures/climate_loadings1.png", wi
 ## I'm also going to be making one WITHOUT labels for ease of reading and looking at points (I couldn't figure out loadings alpha/opacity)
 autoplot(climate_pca, 
          data=meta, 
-         colour = "region", 
-         loadings = T,
-         loadings.colour = c("tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","darkslateblue",
-                                           "darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue"),
-         loadings.label.colour = c("tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","darkslateblue",
-                                   "darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue"))
+         colour = "region")
+         ##loadings = T,
+         ##loadings.colour = c("tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","darkslateblue",
+         ##                                  "darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue"),
+         ##loadings.label.colour = c("tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","tomato","darkslateblue",
+         ##                          "darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue","darkslateblue"))
 
-ggsave("~/projects/eco_genomics/group_project/figures/climate_loadings2.png", width=12, height=6, units="in")   
+ggsave("~/projects/eco_genomics/group_project/figures/climate_loadings3.png", width=12, height=6, units="in")   
 
 
 ## Variables in order:

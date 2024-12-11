@@ -20,7 +20,7 @@ a1 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "A)",
        x = "Subpopulation",
-       y = "Mean Temperature") +
+       y = "Mean Temperature (°C*10)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5)) 
@@ -33,7 +33,7 @@ a2 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "B)",
        x = "Subpopulation",
-       y = "Mean Diurnal Range") +
+       y = "Mean Diurnal Range (°C*10)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5))
@@ -46,7 +46,7 @@ a3 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "C)",
        x = "Subpopulation",
-       y = "Temperature Range") +
+       y = "Temperature Range (°C*10)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5)) 
@@ -59,7 +59,7 @@ a4 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "D)",
        x = "Subpopulation",
-       y = "Annual Precipitation") +
+       y = "Annual Precipitation (mm)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5)) 
@@ -72,7 +72,7 @@ a5 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "E)",
        x = "Subpopulation",
-       y = "Mean Precipiation during Driest Month") +
+       y = "Mean Precipiation during Driest Month (mm)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5)) 
@@ -85,7 +85,7 @@ a6 <- ggplot(metaclim, aes(x = factor(subpop, level= c("GER1","GER2","GER3","GER
   geom_bar(stat = "identity", position = position_dodge()) +
   labs(title = "F)",
        x = "Subpopulation",
-       y = "Mean Precipiation during Warmest Quarter") +
+       y = "Mean Precipiation during Warmest Quarter (mm)") +
   theme_minimal() +
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90, hjust = 1, size=5)) 
